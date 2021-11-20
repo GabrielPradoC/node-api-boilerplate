@@ -15,7 +15,6 @@ const baseOptions: Omit<ConnectionOptions, 'type'> = {
     synchronize: true
 };
 
-
 // Opções para conexão com MongoDB
 const mongoOptions: MongoConnectionOptions = {
     type: 'mongodb',
