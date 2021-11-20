@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 // Modules
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { checkSchema, Result, Schema, ParamSchema, ValidationError, validationResult, Meta } from 'express-validator';
