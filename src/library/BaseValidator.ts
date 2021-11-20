@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // Modules
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { checkSchema, Result, Schema, ParamSchema, ValidationError, validationResult, Meta } from 'express-validator';
@@ -60,6 +61,40 @@ export class BaseValidator {
                 }
             },
             errorMessage: 'Nome inválido'
+        },
+        email: {
+            in: 'body',
+            isString: true,
+            isEmail: true,
+            errorMessage: 'Email inválido'
+        },
+        phoneNumber: {
+            in: 'body',
+            isString: true,
+            isMobilePhone: {
+                locale: 'pt-BR'
+            },
+            isLength: {
+                options: {
+                    min: 9
+                }
+            },
+            errorMessage: 'Número de telefone inválido'
+        },
+        isActive: {
+            in: 'body',
+            isString: false,
+            isBoolean: {
+                options: {
+                    loose: false
+                }
+            },
+            toBoolean: {
+                options: {
+                    strict: true
+                }
+            },
+            errorMessage: 'Status do usuário inválido'
         }
     };
 

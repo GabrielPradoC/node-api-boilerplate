@@ -1,0 +1,1963 @@
+{
+	"info": {
+		"_postman_id": "15a09771-3214-453a-9868-4733fbcca9ca",
+		"name": "riott-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "tests",
+			"item": [
+				{
+					"name": "Retorna informações de um usuário",
+					"item": [
+						{
+							"name": "Invalid parameter",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body status is false\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(false);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4444/v1/user/1123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4444",
+									"path": [
+										"v1",
+										"user",
+										"1123"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Lista os usuários",
+					"item": [
+						{
+							"name": "Response body has data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Data property has rows property\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.have.property('data');\r",
+											"    pm.expect(jsonData.data).to.have.property('rows');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4444/v1/user?page=1&size=10&order&orderBy=ASC",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4444",
+									"path": [
+										"v1",
+										"user"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										},
+										{
+											"key": "order",
+											"value": null
+										},
+										{
+											"key": "orderBy",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Cadastra um usuário",
+					"item": [
+						{
+							"name": "Invalid name field",
+							"item": [
+								{
+									"name": "Request has invalid name field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('name');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"e\",\r\n    \"email\":\"example@hotmail.com\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid name field 2",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('name');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"ex\",\r\n    \"email\":\"example@hotmail.com\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Invalid email field",
+							"item": [
+								{
+									"name": "Request has invalid email field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('email');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abcdefg\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid email field 2",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('email');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abcdefg@something\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid email field 3",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('email');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"@something.\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid email field 4",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('email');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abcdefg@something\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid email field 5",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('email');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"@something\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid email field 6",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('email');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"something.com\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Invalid phoneNumber field",
+							"item": [
+								{
+									"name": "Request has invalid phoneNumber field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('phoneNumber');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abc@hotmail.com\",\r\n    \"phoneNumber\":\"12345\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid phoneNumber field 2",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('phoneNumber');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abc@hotmail.com\",\r\n    \"phoneNumber\":\"12345678\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid phoneNumber field 3",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('phoneNumber');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abc@hotmail.com\",\r\n    \"phoneNumber\":\"i love burguers\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid phoneNumber field 4",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('phoneNumber');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abc@hotmail.com\",\r\n    \"phoneNumber\":\"123456789101112123976124892347\",\r\n    \"isActive\":true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Invalid isActive field",
+							"item": [
+								{
+									"name": "Request has invalid isActive field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('isActive');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abc@hotmail.com\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\": \"something\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid isActive field 2",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('isActive');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abc@hotmail.com\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\": \"yes\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid isActive field 3",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('isActive');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abc@hotmail.com\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\": \"no\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request has invalid isActive field 4",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body status is false\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(false);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Error param is equal to name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property('error');\r",
+													"    pm.expect(jsonData.error[0].param).to.eql('isActive');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abc@hotmail.com\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\": 123\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4444/v1/user",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4444",
+											"path": [
+												"v1",
+												"user"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Request is missing name field",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body status is false\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(false);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error param is equal to name\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.error[0].param).to.eql('name');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"example@hotmail.com\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\":true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4444/v1/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4444",
+									"path": [
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Request is missing email field",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body status is false\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(false);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error param is equal to email\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.error[0].param).to.eql('email');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"example\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\":true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4444/v1/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4444",
+									"path": [
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Request is missing phoneNumber field",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body status is false\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(false);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error param is equal to phoneNumber\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.error[0].param).to.eql('phoneNumber');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"example\",\r\n    \"email\":\"example@hotmail.com\",\r\n    \"isActive\":true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4444/v1/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4444",
+									"path": [
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Request is missing isActive field",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body status is false\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(false);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error param is equal to isActive\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.error[0].param).to.eql('isActive');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"userName\",\r\n    \"email\":\"abc@hotmail.com\",\r\n    \"phoneNumber\":\"123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4444/v1/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4444",
+									"path": [
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Apaga um usuário definitivamente",
+					"item": [
+						{
+							"name": "Request has invalid id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body status is false\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(false);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error param is equal to id\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.error[0].param).to.eql('id');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4444/v1/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4444",
+									"path": [
+										"v1",
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Altera um usuário",
+					"item": [
+						{
+							"name": "Request has invalid id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body status is false\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(false);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Error param is equal to id\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.error[0].param).to.eql('id');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"6\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4444/v1/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4444",
+									"path": [
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest(\"http://localhost:4444/v1/user\", function (err, response) {",
+							"    pm.test(\"Endpoint /v1/user is working\", function () {",
+							"        pm.expect(response.code).to.eql(200);",
+							"    });",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "/v1/user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://localhost:4444/v1/user?page&size&order&orderBy",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"v1",
+						"user"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": null,
+							"description": "Número da pagina"
+						},
+						{
+							"key": "size",
+							"value": null,
+							"description": "Quantidade de itens"
+						},
+						{
+							"key": "order",
+							"value": null,
+							"description": "Chave para ordenar"
+						},
+						{
+							"key": "orderBy",
+							"value": null,
+							"description": "Direção da ordenação (ASC)endente (DESC)endente"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Lista os usuários",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:4444/v1/user?page=1&size=10&order&orderBy=ASC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"v1",
+								"user"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Número da pagina"
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"description": "Quantidade de itens"
+								},
+								{
+									"key": "order",
+									"value": null,
+									"description": "Chave para ordenar"
+								},
+								{
+									"key": "orderBy",
+									"value": "ASC",
+									"description": "Direção da ordenação (ASC)endente (DESC)endente"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "/v1/user",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4444/v1/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Cadastra um usuário",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"example\",\r\n    \"email\":\"example@hotmail.com\",\r\n    \"phoneNumber\":\"123456789\",\r\n    \"isActive\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4444/v1/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "/v1/user/{userId}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4444/v1/user/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"v1",
+						"user",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Apaga um usuário definitivamente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4444/v1/user/6197cf481fa3fd0036bfc1cc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"v1",
+								"user",
+								"6197cf481fa3fd0036bfc1cc"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "/v1/user/{userId}",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4444/v1/user/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"v1",
+						"user",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Retorna informações de um usuário",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4444/v1/user/6197ca671fa3fd0036bfc1ca",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"v1",
+								"user",
+								"6197ca671fa3fd0036bfc1ca"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "/v1/user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4444/v1/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4444",
+					"path": [
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Altera um usuário",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"6197ca671fa3fd0036bfc1ca\",\r\n    \"name\": \"Example Example\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4444/v1/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4444",
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	]
+}

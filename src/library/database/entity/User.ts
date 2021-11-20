@@ -9,6 +9,15 @@ export class User extends BaseEntity {
     public name: string;
 
     @Column()
+    public email: string;
+
+    @Column()
+    public phoneNumber: string;
+
+    @Column()
+    public isActive: boolean;
+
+    @Column()
     public createdAt: Date;
 
     @Column()
