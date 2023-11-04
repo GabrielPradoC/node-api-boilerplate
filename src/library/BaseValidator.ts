@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 // Modules
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { checkSchema, Result, Schema, ParamSchema, ValidationError, validationResult, Meta } from 'express-validator';
@@ -27,7 +26,6 @@ export class BaseValidator {
         id: (repository: BaseRepository): ParamSchema => {
             return {
                 in: ['body', 'params'],
-                isMongoId: true, // Não usar em caso de banco diferente do MongoDB
                 custom: {
                     options: async (value: string, { req }: Meta) => {
                         const data = await repository.findOne(value);
