@@ -93,12 +93,24 @@ export class UserController extends BaseController {
      *           schema:
      *             type: object
      *             example:
-     *               name: userName
+     *               name: Example Example
+     *               email: example@hotmail.com
+     *               phoneNumber: 123456789
+     *               isActive: true
      *             required:
      *               - name
+     *               - email
+     *               - phoneNumber
+     *               - isActive
      *             properties:
      *               name:
      *                 type: string
+     *               email:
+     *                 type: string
+     *               phoneNumber:
+     *                 type: string
+     *               isActive:
+     *                 type: boolean
      *     responses:
      *       $ref: '#/components/responses/baseCreate'
      */
@@ -107,7 +119,10 @@ export class UserController extends BaseController {
     @Middlewares(UserValidator.post())
     public async add(req: Request, res: Response): Promise<void> {
         const newUser: DeepPartial<User> = {
-            name: req.body.name
+            name: req.body.name,
+            email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
+            isActive: req.body.isActive
         };
 
         await new UserRepository().insert(newUser);
@@ -135,12 +150,17 @@ export class UserController extends BaseController {
      *               name: userName
      *             required:
      *               - id
-     *               - name
      *             properties:
      *               id:
      *                 type: string
      *               name:
      *                 type: string
+     *               email:
+     *                 type: string
+     *               phoneNumber:
+     *                 type: string
+     *               isActive:
+     *                 type: boolean
      *     responses:
      *       $ref: '#/components/responses/baseEmpty'
      */
@@ -149,9 +169,10 @@ export class UserController extends BaseController {
     @Middlewares(UserValidator.put())
     public async update(req: Request, res: Response): Promise<void> {
         const user: User = req.body.userRef;
-
-        user.name = req.body.name;
-
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
+        user.isActive = req.body.isActive !== undefined ? req.body.isActive : user.isActive;
         await new UserRepository().update(user);
 
         RouteResponse.successEmpty(res);

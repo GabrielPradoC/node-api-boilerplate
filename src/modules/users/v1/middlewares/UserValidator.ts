@@ -24,6 +24,9 @@ export class UserValidator extends BaseValidator {
      */
     private static model: Schema = {
         name: BaseValidator.validators.name,
+        email: BaseValidator.validators.email,
+        phoneNumber: BaseValidator.validators.phoneNumber,
+        isActive: BaseValidator.validators.isActive,
         id: {
             ...BaseValidator.validators.id(new UserRepository()),
             errorMessage: 'Usuário não encontrado'
@@ -48,6 +51,27 @@ export class UserValidator extends BaseValidator {
     };
 
     /**
+     * updateModel
+     *
+     * Schema para validação de usuário na rota put
+     */
+    private static updateModel: Schema = {
+        minOneProperty: {
+            errorMessage: 'É necessário no mínimo uma propriedade para ser alterada!',
+            custom: {
+                options: (_: string, { req }) => {
+                    const { email, name, phoneNumber, isActive } = req.body;
+                    return (email || name || phoneNumber || isActive) !== undefined;
+                }
+            }
+        },
+        name: { ...BaseValidator.validators.name, optional: true },
+        email: { ...BaseValidator.validators.email, optional: true },
+        phoneNumber: { ...BaseValidator.validators.phoneNumber, optional: true },
+        isActive: { ...BaseValidator.validators.isActive, optional: true }
+    };
+
+    /**
      * post
      *
      * @returns Lista de validadores
@@ -55,6 +79,9 @@ export class UserValidator extends BaseValidator {
     public static post(): RequestHandler[] {
         return UserValidator.validationList({
             name: UserValidator.model.name,
+            email: BaseValidator.validators.email,
+            phoneNumber: BaseValidator.validators.phoneNumber,
+            isActive: BaseValidator.validators.isActive,
             duplicate: UserValidator.model.duplicate
         });
     }
@@ -67,7 +94,7 @@ export class UserValidator extends BaseValidator {
     public static put(): RequestHandler[] {
         return UserValidator.validationList({
             id: UserValidator.model.id,
-            ...UserValidator.model
+            ...UserValidator.updateModel
         });
     }
 
